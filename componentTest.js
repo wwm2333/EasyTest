@@ -1,56 +1,29 @@
-//参数
-//配置参数和默认参数
-function Drag(){
-    this.obj=null;
-    this.disx=0;
-    this.disy=0;
-    this.settings={ //默认参数
-        toUp:function(){},
-        toDown:function(){}
+/**
+ * 组件:自定义元素，html+,自己扩展的HTML标签
+ * customElements: .define("my-element",className)
+ */
+
+ //独立元素
+ //继承HTMLElement
+class MyElement extends HTMLElement{
+    constructor(){
+        super();
+        console.log('1');
     }
 }
-Drag.prototype.init=function(opt){
-    var This=this;
-    This.obj=document.getElementById(opt.id);
-    extend(opt,This.settings);
-    This.obj.onmousedown=function(ev){
-        var ev=ev||window.event;
-        This.fnDown(ev);
-        This.settings.toDown();
-        document.onmousemove=function(ev){
-            var ev=ev||window.event;
-            This.fnMove(ev);
-        }
-        document.onmouseup=function(){
-            This.fnUp(ev);
 
-            This.settings.toUp();
-        }
-        return false;
+//把类注册成一个元素 my-element 需要-，全小写
+customElements.define('my-element',MyElement);
+
+//依赖元素
+ //继承特定的html元素：如 HTMLDivElement
+class MyDivElement extends HTMLDivElement{
+    constructor(){
+        super();
+        console.log("依赖元素")
     }
 }
-Drag.prototype.fnDown=function(ev){
-    this.disx=ev.clientX-this.obj.offsetLeft;
-    this.dixy=ev.clientY-this.obj.offsetTop;
-}
-Drag.prototype.fnMove=function(ev){
-    this.obj.style.left=ev.clientX-this.disx +'px';
-    this.obj.style.top=ev.clientY-this.disy+'px';
-}
-Drag.prototype.fnUp=function(ev){
-   document.onmousemove=null;
-   document.onmouseup=null;
-}
+customElements.define('my-div',MyDivElement,{
+    extends:'div'
+});
 
-
-
-
-
- function extend(fobj,cobj){
-    for (const attr  in fobj) {
-        if (fobj.hasOwnProperty(attr)) {
-            cobj[attr] = fobj[attr];
-        }
-    }
-}
- 

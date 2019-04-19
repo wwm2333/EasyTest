@@ -15,7 +15,7 @@
 
     var d2=new DragChild("div2");
     d2.init();
-};*/
+};
 
 window.onload=function(){
     var d1=new Drag();
@@ -34,11 +34,15 @@ window.onload=function(){
         }
     });
 };
+*/
+
 </script>
 
 </head>
 <body>
-    <div id="div1"></div>
-    <div id="div2"></div>
+    <!--独立元素-->
+    <my-element></my-element>
+     <!--继承的元素  需要使用is属性指定custom element名称-->
+     <div is='my-div' ></div>
 </body>
 </html>
