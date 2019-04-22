@@ -40,8 +40,14 @@ window.onload=function(){
 
 </head>
 <body>
-    <!--独立元素-->
-    <my-element></my-element>
+    <!--独立元素-插槽-->
+    <my-element contents='["qwqwrew","kerjyporeh","sdgdfg"]' >
+        <p> 这是内容</p>
+        <ul slot='f'>
+          <li>111</li>
+          <li>222</li>
+        </ul>
+        </my-element>
      <!--继承的元素  需要使用is属性指定custom element名称-->
      <div is='my-div' ></div>
 </body>
