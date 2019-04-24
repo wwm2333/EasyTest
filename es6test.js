@@ -173,7 +173,172 @@ console.log(wm);
          this.name=name;
          this.age=age;
      }
+     say(){
+         console.log(this.name);
+     }
+     static isHuman(obj){ //静态方法--MyClass.isHuman(obj)
+        return obj instanceof MyClass ;
+     }
  }
 
+//静态属性
+MyClass.staticProps="sdfs";
+
  var p=new MyClass('aa',22);
- 
+
+ /**
+  * Symbol --代表独一无二的对象
+  */
+
+//不用new
+  var s=Symbol("a"); //a只是个标识，没有任何意义
+  console.log(typeof s);//"sysmbol"
+  console.log(s);//Symbol(a)
+
+  var s2=Symbol("b");
+  console.log(typeof s);//"sysmbol"
+  console.log(s);//Symbol(b)
+
+  console.log(s===s2);//false
+
+  var obj2={
+      name:"sdsf"
+  }
+  var sy=Symbol('a');
+  obj2[sy]="dfsd"; //给obj2对象一个symbol键
+
+//取对象中symbol值
+console.log(Object.getOwnPropertySymbols(obj2));//symbol属性列
+
+var sy1=symbol("c");
+//console.log(sy1+"ss"); sy1不能转换成字符串不能转换成数字
+
+console.log(!!sy1);//true 可以转换成bool
+
+/**
+ * 字符串
+ */
+
+var str1="sdgfkadga";
+console.log(str1.includes("sd"));
+console.log(str1.startsWith("sd"));
+console.log(str1.endsWith("dd"));
+var str2=str1.repeat(3);
+console.log(str2);
+
+//``超级字符串反引号 ${}拼接
+var hrml=`
+<ul>
+<li></li>
+<li>${str1}</li>
+</ul>`;
+
+
+/**
+ * 数组
+ */
+
+//of创建 from转换 isArray判断
+var arr2= Array.of(10,20,30);
+console.log(Array.isArray(arr2));
+
+var els=document.all;
+var arres=Array.from(els);//转成数组
+
+//find
+var res1= arres.find(function(item){
+    return item>50;
+});
+//findIndex
+var res2=arres.findIndex(function(item){
+    return item>50;
+});
+
+/**
+ * 对象
+ */
+
+ //对象类的一些简洁表示法
+var s=1;
+var attr="name";
+var obj3={
+    s, //obj={s:s}-->obj={s:1}
+    fn(){
+        console.log("fn");
+    },
+    [attr]:"ddd" ,//"name":"ddd"
+}; 
+//is()
+console.log(Object.is(1,1))//true
+console.log(Object.is(1,"1"))//true
+console.log(Object.is(NaN,NaN))//true
+console.log(Object.is({},{}))//false
+//assign(para,obj1,obj2)   把后面的东西往前面融合赋值给第一个参数，以后面的为准
+//可用于参数传递时默认参数与传入参数的选择
+function move(obj){
+    var defaultobj1={
+        name:"sss",
+        age:10
+    }
+    var para={};
+    Object.assign(para,defaultobj1,obj);
+    console.log(para);// {name:"ddd",age:10}
+}
+move({
+    name:"ddd"
+
+});
+
+//keys(obj) valus(obj) entites(obj)
+var obj4={
+    a:1,
+    b:2
+}
+for (var [key,value] of Objects.entries(obj4)) {
+    console.log(key,value);
+}
+
+//...obj 扩展运算符 将对象打散成参数的形式 也可用于数组
+var obj5={
+    ...obj4, //
+    c:3
+}
+
+var arr3=[1,2,4,1,3,1];
+var res4=[...new Set(arr)];//去重转换成数组
+
+/**
+ * 函数
+ */
+
+ //默认值 声明时可以赋默认值
+ function add(a,b=100){
+     return a+b;
+ }
+//剩余参数
+fnc(1,2,3,4);
+function fnc(a,...r){
+     console.log(r);//2,3,4
+ }
+
+ //箭头函数
+ var add1=(a,b)=>{return a+b};
+ var add2=(a,b)=>a+b;//只有一个语句的时候可以不写{}和return
+ var add3=(a,b)=>{{res:a+b}};//{}返回对象
+ var add4=a=>a*100;//参数只有一个可以不写（）
+
+ var arr4=[23,4,55,66];
+ var res5=arr4.filter(item=>item>20);
+//this指向；没有arguments
+ var fn4=(...r)=>{
+     console.log(this);  //this在创建箭头函数的时候就已经订好了
+    console.log(arguements);//不能用arguements
+    console.log(r);//可以用剩余参数
+    }
+
+ var fn5=function(){
+    console.log(this); //this谁调用就指向谁
+}
+document.onclick= fn4(); //window
+//document.onclick= fn5(); //document
+
