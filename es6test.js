@@ -342,3 +342,110 @@ function fnc(a,...r){
 document.onclick= fn4(); //window
 //document.onclick= fn5(); //document
 
+/**
+ * promise
+ * 异步编程解决方案
+ * 状态：pending，resolved,rejected
+ * p.then(()=>{})
+ */
+
+ var p=new Promise((resolve,reject)=>{
+     console.log("dsdjjj");
+
+     //成功
+     return resolve("rsolved");
+
+     //失败
+    //return reject();
+ });
+
+ p.then((data)=>{
+    console.log("then--"+data);
+ });
+
+ //宏任务与微任务 ： 先执行宏任务再执行微任务
+ console.log(1);
+  //settimeout只是把任务加到 下一轮 的任务堆中，
+  //无论时间间隔是多少，在本轮任务中都不会执行
+ setTimeout(() => {
+    console.log(3);   
+ });
+ setTimeout(() => {
+    console.log(4);   
+ });
+//宏
+ var p1=new Promise((res,re)=>{
+     console.log(5);
+     res();
+ });
+ p1.then(()=>{  //then()参数中的方法是微任务
+     console.log(6);
+ });
+//宏
+ console.log(2); 
+
+ //。。。。。上述代码执行顺序是：1--5--2--6--3--4
+
+ //then() 返回一个Promise，他的状态就是
+var p2=new Promise((res,rej)=>{
+    res("成功");
+    rej();
+});
+p2.then((data)=>{
+    console.log(data);
+},()=>{
+    console.log("失败");
+});
+//失败的时候执行catch()
+p2.catch(()=>{
+    console.log("失败");
+});
+
+//可以链式调用
+p2.then((data)=>{
+
+})
+.then(()=>{
+
+})
+.catch(()=>{
+
+})
+.finally(()=>{
+
+});
+
+//静态方法
+ var p8= Promise.resolve();//成功状态的promise
+//Promise.reject(); //失败状态的promise
+
+var p3=new Promise((res,rej)=>{
+    setTimeout(() => {
+        res("a");
+    }, 1000);
+})
+var p4=new Promise((res,rej)=>{
+    setTimeout(() => {
+        res("b");
+    }, 1500);
+})
+var p5=new Promise((res,rej)=>{
+    setTimeout(() => {
+        res("c");
+    }, 500);
+})
+
+var p6=Promise.all([p3,p4,p5]);//所有promise执行之后的结果
+console.log(p6);//["a","b","c"]
+
+var p7=Promise.race([p3,p4,p5]);//返回执行最快的promise   p5
+console.log(p7);//p5
+
+/**
+ * 模块化
+ */
+//defer:在外链js上使用，会在其他dom和js加载完之后在加载，多个defer之间依次加载
+//<script src="a.js" defer></script>
+
+//export import
+
