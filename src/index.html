@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <style>
+        #div{
+            width:100px;
+            height: 100px;
+            background-color: brown;
+            position: absolute;
+            left:0px;
+            top:0px;
+            }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        window.onload=function(){
+            var oBtn=document.getElementById('btn');
+            var oName=document.getElementById('name');
+            var oDiv=document.getElementById('div');
+            var socket =null; 
+
+            oBtn.onclick=function(){
+                socket=io('http://localhost:8888');
+                socket.on('news', function (data) {
+                console.log(data);
+                oName.innerHTML=data.hello;
+                socket.emit('my other event', { my: 'data' });
+            
+                socket.on('another',function(data){
+                    alert(data);
+                })
+                //拖拽
+                var disX=0;
+                var disY=0;
+                var X=0;
+                var Y=0;
+                oDiv.ondragstart=function(ev){
+                    var ev=ev||event;
+                    X=ev.clientX;
+                    Y=ev.clientY;
+                    disX=X-oDiv.offsetLeft;
+                    disY=Y-oDiv.offsetTop;
+                }
+                
+                oDiv.ondrag=function(ev){
+                    var ev=ev||event;
+                    oDiv.style.left=ev.clientX-disX+"px";
+                    oDiv.style.top=ev.clientY-disY+"px";
+                    if( ev.clientX-disX>0&& ev.clientY-disY>0){
+                        socket.emit('move',{left:oDiv.style.left,top:oDiv.style.top});
+                    }
+                }
+             oDiv.ondragend=function(ev){
+                var ev=ev||event;
+                oDiv.style.left=ev.clientX-disX+"px";
+                oDiv.style.top=ev.clientY-disY+"px";
+                socket.emit('move',{left:oDiv.style.left,top:oDiv.style.top});
+             }
+                socket.on('setpossion',function(data){
+                    console.log(data.left,data.top);
+                    oDiv.style.left=data.left;
+                    oDiv.style.top=data.top;
+                })
+                });
+            
+
+            }
+        }
+    
+    </script>
+
+</head>
+<body>
+    <h1>Hello,<span id="name"></span></h1>
+    <input type="file"/>
+   <input type="button" id="btn" value="建立socket链接" />
+
+  <div id='div' draggable="true"></div>
+
+  <div contenteditable="true" value="内容变成可输入"></div>
+  <input type="text" x-webkit-speech /> <!--语音输入：火狐不支持-->
+  
+</body>
+</html>
+
+
