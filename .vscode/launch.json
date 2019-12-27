@@ -23,7 +23,7 @@
             "type": "chrome",
             "request": "launch",
             "sourceMaps": false,
-            "file": "${workspaceRoot}/src/storage.html"  
+            "file": "${workspaceRoot}/src/canvas.html"  
         }
     ]
 }
