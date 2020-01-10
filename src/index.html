@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+    -->
+    <style>
+        body{
+            margin: 0;
+        }
+        #box{
+            height: 200px;
+           border:1px solid #000;
+           /*新版弹性盒模型  flex*/
+           display: flex;
+            /*设置主轴方向 row水平方向 row-reverse水平反序 colume垂直方向 colume-reverse */
+            flex-direction: row;
+            /*
+            flex-start 元素在主轴开始位置，富裕空间在主轴结束位置  
+            flex-end
+            center 原色在主轴中间，富裕空间在两侧
+            space-between 富裕空间平均分配在每两个元素之间
+            spce-around 富裕空间平均分配在每个元素两侧
+            */
+            justify-content: space-between;
+            /*
+            
+            */
+            align-items: center;
+        }
+        #box1{
+            height: 200px;
+           border:1px solid #000;
+            /*老版弹性盒模型   -webkit-box*/
+            display: -webkit-box;
+            /*设置主轴方向 horizontal水平方向 vertical垂直方向*/
+            -webkit-box-orient: horizontal ;
+            -webkit-box-direction: reverse; /*反序*/
+            -webkit-box-pack: justify;
+        }
+        #box div{
+            width: 50px;
+            height: 50px;
+            background-color: brown;
+            font-size: 20px;
+            color: #fff;
+        }
+        #box1 div{
+            width: 50px;
+            height: 50px;
+            background-color: brown;
+            font-size: 20px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+    </div>
+    <div id="box1">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+    </div>
+</body>
+</html>
+
+
